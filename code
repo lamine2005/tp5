@@ -1,0 +1,44 @@
+exo 1 tp5:
+#include<stdio.h>
+typedef struct {
+  int h;
+  int m;
+  int s;
+}temp;
+int temp_en_secondes(temp T) {
+  int s1=0;
+  s1=s1+T.h*3600;
+  s1=s1+T.m*60;
+  s1=s1+T.s;
+  return s1;
+}
+void secondes_en_temp(int s2) {
+  temp T4;
+  T4.h=s2/3600;
+  s2=s2%3600;
+  T4.m=s2/60; 
+  T4.s=s2%60;
+	printf("le temps en temp est:%dh,%dm,%ds",T4.h,T4.m,T4.s);
+}
+void somme_temps(temp T1, temp T2) {
+  temp T3;
+  T3.h=T1.h+T2.h;
+  T3.m=T1.m+T2.m;
+  T3.s=T1.s+T2.s;
+  printf("%dh,%dm,%ds ",T3.h,T3.m,T3.s);
+}
+int main(){
+	temp T,T1,T2;
+	int s2;
+	printf("saisir le temps T:\n");
+	scanf("%d %d %d",&T.h,&T.m,&T.s);
+	printf("le temp en secondes est:%ds\n",temp_en_secondes(T));
+	printf("saisir le temps en secondes:\n");
+	scanf("%d",&s2);
+	secondes_en_temp(s2);	
+		printf("\nsaisir le temps T1 et T2:\n");
+	scanf("%d %d %d ",&T1.h,&T1.m,&T1.s);
+	scanf("%d %d %d ",&T2.h,&T2.m,&T2.s);
+	somme_temps(T1,T2);
+}
+exo 2 tp5:
