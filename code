@@ -42,3 +42,66 @@ int main(){
 	somme_temps(T1,T2);
 }
 exo 2 tp5:
+#include <stdio.h>
+
+typedef struct {
+    int JJ;
+    int MM;
+    int AA;
+} DATE;
+
+void trier_dates(DATE dates[], int N) {
+    int i, j;
+    DATE temp;
+    for (i = 0; i < N-1; i++) {
+        for (j = i+1; j < N; j++) {
+            if (dates[i].AA > dates[j].AA ||
+                (dates[i].AA == dates[j].AA && dates[i].MM > dates[j].MM) ||
+                (dates[i].AA == dates[j].AA && dates[i].MM == dates[j].MM && dates[i].JJ > dates[j].JJ)) {
+                temp = dates[i];
+                dates[i] = dates[j];
+                dates[j] = temp;
+            }
+        }
+    }
+}
+int jours_entre_dates(DATE d1, DATE d2) {
+    int jours = 0;
+    while (d1.AA < d2.AA || (d1.AA == d2.AA && d1.MM < d2.MM) || (d1.AA == d2.AA && d1.MM == d2.MM && d1.JJ < d2.JJ)) {
+        jours++;
+        d1.JJ++;
+        if (d1.JJ > 31 || (d1.JJ > 30 && (d1.MM == 4 || d1.MM == 6 || d1.MM == 9 || d1.MM == 11)) || (d1.JJ > 29 && d1.MM == 2) || (d1.JJ > 28 && d1.MM == 2 && (d1.AA % 4 != 0 || (d1.AA % 100 == 0 && d1.AA % 400 != 0)))) {
+            d1.JJ = 1;
+            d1.MM++;
+            if (d1.MM > 12) {
+                d1.MM = 1;
+                d1.AA++;
+            }
+        }
+    }
+    return jours;
+}
+
+int main() {
+    int N,i;
+    printf("Entrez le nombre de dates : ");
+    scanf("%d", &N);
+    DATE dates[N];
+    for ( i = 0; i < N; i++) {
+        printf("Entrez la date %d (JJ/MM/AAAA) : ", i+1);
+        scanf("%d/%d/%d", &dates[i].JJ, &dates[i].MM, &dates[i].AA);
+    }
+    trier_dates(dates, N);
+    printf("Dates triees :\n");
+    for ( i = 0; i < N; i++) {
+        printf("%02d/%02d/%04d\n", dates[i].JJ, dates[i].MM, dates[i].AA);
+    }
+    DATE d1, d2;
+    printf("Entrez la premiere date (JJ/MM/AAAA) : ");
+    scanf("%d/%d/%d", &d1.JJ, &d1.MM, &d1.AA);
+    printf("Entrez la deuxieme date (JJ/MM/AAAA) : ");
+    scanf("%d/%d/%d", &d2.JJ, &d2.MM, &d2.AA);
+    int jours = jours_entre_dates(d1, d2);
+    printf("Nombre de jours entre %02d/%02d/%04d et %02d/%02d/%04d : %d\n", d1.JJ, d1.MM, d1.AA, d2.JJ, d2.MM, d2.AA, jours);
+    return 0;
+}
